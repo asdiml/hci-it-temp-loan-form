@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+  </head>
+  <body>
+    <table cellpadding="0" cellspacing="0" width="100%">
+      <tr>
+        <td width="100%" style="background: #eee; border-radius: 3px;">
+          <h1 style="border-radius: 3px 3px 0px 0px; background: #34A853; color: #fff; text-align: center; padding: 24px 0px; margin: 0px;"><?= title ?></h1>
+          <div style="padding: 0px 24px;">
+            <p>Your loan details are as follows: </p>
+
+            <table style="width: 100%; margin: 13px 0px; border-collapse: collapse; border-radius: 3px; overflow: hidden;">
+              <? loanDetails.forEach((loanDetail, i) => { ?>
+                  <tr>
+                    <td style="padding: 6px 12px; border: 1px solid #333;"><?= loanDetail.label ?></td>
+                    <td style="padding: 6px 12px; border: 1px solid #333;"><?= loanDetail.value ?></td>
+                  </tr>
+              <? }) ?>
+            </table>
+
+            <table style="width: 100%;" cellpadding="0" cellspacing="0">
+              <tr>
+                <td style="text-align: left;">
+                    <a 
+                      href="<?= actionUrl ?>"
+                      target="_blank"
+                      style="border-radius: 3px; border: none; display: inline-block; text-decoration: none; padding: 12px 24px; background: #34A853; color: #fff;">
+                      Accept or Reject Loan</a>
+                </td>
+              </tr>
+            </table>
+            </p>
+            <br>
+          </div>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>

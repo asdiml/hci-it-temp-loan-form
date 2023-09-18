@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+  </head>
+  <?!= include("css.html") ?>
+  <body>
+    <div id="app">
+        <div class="app-header <?= Object.values(loanStatusEnums.Rejected).indexOf(loanStatus)>-1 ? 'red-bg' : '' ?>">
+            <h1><?= title ?></h1>
+        </div>
+        <? if (loanDetails) { ?>
+        <div class="app-content">
+            <div class="left">
+                <h2 class="section">Loan Details</h2>
+                <div class="section">
+                  <ul class="list">
+                      <? loanDetails.forEach( loanDetail => { ?>
+                      <li>
+                          <label><?= loanDetail.label ?></label>
+                          <div class="<?= Object.values(loanStatusEnums.Pending).indexOf(loanDetail.value)>-1 ? 'yellow-text' :  Object.values(loanStatusEnums.Accepted).indexOf(loanDetail.value)>-1 ?  'green-text' : Object.values(loanStatusEnums.Rejected).indexOf(loanDetail.value)>-1  ? 'red-text' : '' ?>"><?= loanDetail.value ?></div>
+                      </li>
+                      <? }) ?>
+                  </ul>
+                </div>
+            </div>
+            <div class="middle">
+                <h2 class="section">Loan Policy</h2>
+                <div class="section">
+                  <ul class="list">
+                      <li>As the borrower, you will be responsible and liable for the item(s) borrowed from <strong>Hwa Chong Institution</strong>.</li>
+                      <li>By accepting this loan I acknowledge the following: </li>
+                      <ol>
+                        <li>The item(s) mentioned in the <em>Loan Details</em> section (henceforth termed "borrowed item(s)") is/are in <strong>good and working condition</strong>.</li>
+                        <li>I agree to take the necessary precautions to ensure that the borrowed item(s) remain in good working condition and that its/their security is not compromised.</li>
+                        <li>I am fully responsible for the borrowed item(s), and for its/their <strong>safe and timely return</strong> to IT staff.</li>
+                        <li>If the borrowed item(s) is/are <strong>lost, stolen or vandalised, I will:</strong>
+                          <ul>
+                            <li>Notify the <strong>Principal</strong> of HCI</li>
+                            <li>File a police report and send a copy to the <strong>Principal</strong> and <strong>IT Department</strong> of HCI</li>
+                          </ul>
+                        </li>
+                        <li>In the event of damage/malfunction, I will report this to the <strong>HCI IT Department</strong> immediately and adhere to the following:                <ul>
+                            <li><strong><u>DO NOT</u></strong> attempt to self-fix any of the borrowed item(s) as this could invalidate the warranty, leaving you liable to the cost of repairs/replacement.</li>
+                            <li>Potential Damage Fees (subject to change without prior notice):</li>
+                            <li class="table">
+                              <table>
+                                <tr>
+                                  <td>Display Adaptor</td>
+                                  <td>$35 - $85</td>
+                                  <td>Carrying Case</td>
+                                  <td>$50 - $120</td>
+                                </tr>
+                                <tr>
+                                  <td>Stylus Pen</td>
+                                  <td>$75 - $150</td>
+                                  <td>Battery</td>
+                                  <td>$65 - $165</td>
+                                </tr>
+                                <tr>
+                                  <td>Power Adaptor</td>
+                                  <td>$45 - $125</td>
+                                  <td>Mouse/Notebook Lock</td>
+                                  <td>$6 - $45</td>
+                                </tr>
+                              </table>
+                            </li>
+                            <li style="list-style-type: none;">For accidental spills (liquid), damage to LCD, Chassis & Keyboard, and other types of damages not covered under device warranty, damage fees will be based off the repair cost quoted by the respective vendor.</li>
+                          </ul>
+                        </li>
+                        <li>I agree to abide by all software copyright laws and Acceptable Use Policies adopted by MOE. I understand that software that is not legally licensed may not be loaded into any of my borrowed item(s).</li>
+                      </ol>
+                      <li>BY ACCEPTING THIS LOAN I ACKNOWLEDGE THAT I HAVE READ AND AGREED TO THE ABOVE-STATED CONDITIONS OF EQUIPMENT LOAN AND USE.</li>
+                  </ul>
+                </div>
+
+                <? if (Object.values(loanStatusEnums.Pending).indexOf(loanStatus)>-1) { ?>
+                <form data="<?= [task.taskId, task.taskName] ?>" url="<?= url ?>">
+                    <label for="comments">Comments (optional)</label>
+                    <textarea id="comments" rows="4"></textarea>
+                    <div class="button-set section">
+                        <button id="approve" class="button green-bg">Accept</button>
+                        <button id="reject" class="button red-bg">Reject</button>
+                    </div>
+                    <div id="prompt-message"></div>
+                </form>
+                <? } ?>
+            </div>
+        </div>
+        <? } else { ?>
+        <div class="app-content">
+            <h2 class="red-text">No Record Found</h2>
+        </div>
+        <? } ?>
+    </div>
+    <?!= include("js_approval.html") ?>
+  </body>
+</html>

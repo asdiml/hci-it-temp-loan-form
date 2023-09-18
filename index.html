@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+  </head>
+  <?!= include("css.html") ?>
+  <body>
+    <div id="app">
+      <div class="app-header">
+          <h1><?= title ?></h1>
+      </div>
+      <div class="app-content">
+        <div class="middle">
+          <form data='<?= borrowerEmail ?>' url="<?= url ?>">
+              <label for="searchfield">Search for loans by Borrower Email: </label>
+              <textarea id="searchfield" rows="1"></textarea>
+              <button id="search" class="button green-bg">Search</button>
+              <div id="prompt-message"></div>
+          </form>
+          
+          <? if(loans) { ?>
+          <br>
+          <? if(loans.length) { ?>
+            <p>Borrower's outstanding loans: </p>
+            <div class='table'>
+              <table>
+                <tr>
+                  <td><strong>Loan ID</strong></td>
+                  <td><strong>Item Brand</strong></td>
+                  <td><strong>Item Model</strong></td>
+                  <td><strong>Quantity</strong></td>
+                  <td><strong>Item Serial Number(s)</strong></td>
+                  <td></td>
+                </tr>
+                <?
+                  loans.forEach((loan, index) => {
+                    const brand = loan.loanDetails.find(loanDetail => loanDetail.label === 'Item Brand').value;
+                    const model = loan.loanDetails.find(loanDetail => loanDetail.label === 'Item Model').value;
+                    const quantity = loan.loanDetails.find(loanDetail => loanDetail.label === 'Item Quantity').value;
+                    const serialNo = loan.loanDetails.find(loanDetail => loanDetail.label === 'Item Serial Number(s)').value;
+                ?>
+                <tr>
+                  <td><?= loan.loanId ?></td>
+                  <td><?= brand ?></td>
+                  <td><?= model ?></td>
+                  <td><?= quantity ?></td>
+                  <td><?= serialNo ?></td>
+                  <td>
+                    <button data="<?= loan.loanRow ?>" class="button green-bg return">Return</button>
+                    <div id="prompt-message<?= index+1 ?>"></div>
+                  </td>
+                </tr>
+                <? }) ?>
+              </table>
+              <div id="prompt-message-table"></div>
+            </div>
+          <? } else { ?>
+            <p>No Outstanding loans found</p>
+          <? } ?>
+          <? } ?>
+        </div>
+      </div>
+    </div>
+    <?!= include("js_index.html") ?>
+  </body>
+</html>

@@ -1,0 +1,61 @@
+<script>
+    window.onload = () => {
+  
+      /**
+       * Handles the search interactivity
+       */
+      const searchField = document.getElementById("searchfield");
+      const searchButton = document.getElementById("search");
+      const form = document.forms[0];
+      const promptDiv = document.getElementById("prompt-message");
+      const base_url = form.getAttribute("url");
+  
+      const borrowerEmail = form.getAttribute('data');
+      if(borrowerEmail) searchField.innerHTML = borrowerEmail;
+  
+      // Accepts a boolean value status
+      const disableSearch = status => {
+        form.disabled = status;
+        searchButton.disabled = status;
+        searchField.disabled = status;
+      }
+  
+      searchButton.addEventListener("click", (e) => {
+        e.preventDefault();
+        disableSearch(true);
+        promptDiv.innerHTML = `<label>Searching...</label>`;
+        const borrowerEmail = searchField.value;
+        window.open(`${base_url}?borrowerEmail=${borrowerEmail}`, "_top");
+      });
+  
+      /**
+       * Handles the interactivity of the buttons which return a loan
+       */
+      const returnButtons = document.getElementsByClassName('return');
+      const table = document.getElementsByTagName('table')[0];
+      const promptDivUnderTable = document.getElementById('prompt-message-table');
+  
+      Array.from(returnButtons).forEach((returnButton, index) => {
+        const loanRow = returnButton.getAttribute('data');
+        returnButton.addEventListener("click", (e) => {
+          e.preventDefault();
+          returnButton.disabled = true;
+  
+          const promptDivInTable = document.getElementById(`prompt-message${index+1}`);
+          promptDivInTable.innerHTML = `<label>Returning...</label>`;
+  
+          google.script.run
+            .withSuccessHandler(()=>{
+              promptDivInTable.innerHTML = `<label class='green-text'>Returned</label>`;
+              window.open(`${base_url}?borrowerEmail=${borrowerEmail}`, "_top");
+            })
+            .withFailureHandler((error) => {
+              returnButton.disabled = false;
+              promptDivUnderTable.innerHTML = `<label class='red-text'>${error.message}</label>`;
+              promptDivInTable.innerHTML = ``;
+            })
+            .returnLoan(loanRow);
+        });
+      });
+    }
+  </script>

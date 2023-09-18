@@ -1,0 +1,27 @@
+Data transfer within app
+1. Re-look at the parsedValues mechanism, change it to be able to render Date objects. Subsequently change other functions to render Dates as well
+
+Enum
+1. Migrate the deployment url to an enum
+2. Migrate the names of each html file to an enum
+
+Loan Policy
+1. Find some way of storing and parsing (with loops) the loan policy block 
+
+App.approve and reject
+1. Figure out a way to pass the source sheet to the function without putting it inside the approver JSON, and without manually doing the if else
+- Perhaps do the manual if else in js.html
+2. Combine the approve and reject functions since they are very similar, or at least create some functions to reduce code duplication
+3. Use loan objects instead of the loanRecord array in the moveToSheet() function (Need to code a function to change a loan object to a data array)
+
+Documentation
+1. Write-up documentation for onFormSubmit, approve and reject
+
+Webapp-related
+1. Optimise how index.html works
+2. Form validation for searching for borrowerEmail (client-side + server-side)
+3. Only allowing authorised users to access index.html
+
+TODOs by Alfie
+1. Only allow emails in the Authorised Users sheet to access index.html
+2. In the Outstanding loans sheet, each loan row should have a corresponding return button
